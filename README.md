@@ -2,7 +2,9 @@
 Segundo trabajo practico 20%
 
 Integrantes:
+
 María Alejandra Correa Céspedes
+
 Sara Moncada Arango
 
 
