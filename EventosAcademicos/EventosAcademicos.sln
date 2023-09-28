@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosAcedemicos.Shared", "EventosAcedemicos.Shared\EventosAcedemicos.Shared.csproj", "{BDC668FF-870D-4840-A070-6F53836665E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosAcedemicos.Shared", "EventosAcedemicos.Shared\EventosAcedemicos.Shared.csproj", "{BDC668FF-870D-4840-A070-6F53836665E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosAcademicos.API", "EventosAcademicos.API\EventosAcademicos.API.csproj", "{E4E564C9-0E63-4EFB-8D90-6CFFE4825563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosAcademicos.API", "EventosAcademicos.API\EventosAcademicos.API.csproj", "{E4E564C9-0E63-4EFB-8D90-6CFFE4825563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosAcademicos.WEB", "EventosAcademicos.WEB\EventosAcademicos.WEB.csproj", "{7507E129-7017-45C6-9D50-AFFC4EA3D181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosAcademicos.WEB", "EventosAcademicos.WEB\EventosAcademicos.WEB.csproj", "{7507E129-7017-45C6-9D50-AFFC4EA3D181}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
