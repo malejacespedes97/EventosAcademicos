@@ -1,0 +1,33 @@
+﻿@page "/participante/create"
+@using EventosAcademicos.Shared.Entities;
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Crear Participante</h3>
+
+<ParticipanteForm @ref="participanteForm" Participante="participante" OnSubmit="Create" ReturnAction="Return" />
+
+@code {
+    private Participante participante = new();
+
+    private ParticipanteForm? participante;
+
+    private async Task Create()
+    {
+        var responseHttp = await repository.Post("/api/participante", participante);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message);
+            return;
+        }
+        ParticipanteForm!.FormPostedSuccessfully = true;
+        navigationManager.NavigateTo("/participante");
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/participante");
+    }
+}
