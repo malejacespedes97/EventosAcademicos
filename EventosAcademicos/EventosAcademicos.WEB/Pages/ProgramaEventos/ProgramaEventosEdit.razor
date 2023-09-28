@@ -1,0 +1,69 @@
+﻿﻿@page "/programaeventos/edit/{Id:int}"
+@using EventosAcademicos.Shared.Entities;
+@inject NavigationManager navigationManager
+@inject IRepository repository
+@inject SweetAlertService swal
+
+<h3>Editar</h3>
+
+@if (ProgramaEvento is null)
+{
+    <div class="align-items-center">
+        <img src=" https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700 " />
+    </div>
+}
+else
+{
+    <ProgramaEventoForm @ref="programaEventoForm" ProgramaEvento="programaEvento" OnSubmit="Edit" ReturnAction="Return" />
+}
+
+@code {
+    private ProgramaEvento? programaEvento;
+    private ProgramaEventoForm? programaEventoForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHTTP = await repository.Get<ProgramaEvento>($"api/programaeventos/{Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("programaEvento");
+            }
+            else
+            {
+                var messageError = await responseHTTP.GetErrorMessageAsync();
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            ProgramaEvento = responseHTTP.Response;
+        }
+    }
+
+    private async Task Edit()
+    {
+        var responseHTTP = await repository.Put("api/programaeventos", programaEvento);
+
+        if (responseHTTP.Error)
+        {
+            var mensajeError = await responseHTTP.GetErrorMessageAsync();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+            programaEventoForm!.FormPostedSuccessfully = true;
+            navigationManager.NavigateTo("programaEvento");
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("eventoAcademico");
+    }
+}

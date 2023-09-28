@@ -1,0 +1,111 @@
+﻿﻿@page "/programaeventos/form"
+
+@using EventosAcademicos.Shared.Entities
+@inject SweetAlertService swal
+@inject NavigationManager navigationManager
+
+<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
+<EditForm EditContext="editContext" OnSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>Nombre del Programa:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@ProgramaEvento.NombrePrograma" />
+            <ValidationMessage For="@(() => ProgramaEvento.NombrePrograma)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Hora de Inicio:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@ProgramaEvento.HoraInicio" />
+            <ValidationMessage For="@(() => ProgramaEvento.HoraInicio)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Hora de Finalización:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@ProgramaEvento.HoraFinalizacion" />
+            <ValidationMessage For="@(() => ProgramaEvento.HoraFinalizacion)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Sesión:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@ProgramaEvento.Sesion" />
+            <ValidationMessage For="@(() => ProgramaEvento.Sesion)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Nombre del Ponente:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@ProgramaEvento.NombrePonente" />
+            <ValidationMessage For="@(() => ProgramaEvento.NombrePonente)" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Tema Tratado:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@ProgramaEvento.TemaTratado" />
+            <ValidationMessage For="@(() => ProgramaEvento.TemaTratado)" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+@code {
+    private EditContext editContext = null!;
+
+    [EditorRequired]
+    [Parameter]
+    public ProgramaEvento ProgramaEvento { get; set; } = new ProgramaEvento();
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+
+    public bool FormPostedSuccessfully { get; set; } = false;
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        var formWasEdited = editContext.IsModified();
+
+        if (!formWasEdited)
+        {
+            return;
+        }
+
+        if (FormPostedSuccessfully)
+        {
+            return;
+        }
+
+        var result = await swal.FireAsync(new SweetAlertOptions
+        {
+            Title = "Confirmación",
+            Text = "¿Deseas abandonar la página y perder los cambios?",
+            Icon = SweetAlertIcon.Warning,
+            ShowCancelButton = true
+        });
+
+        var confirm = !string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        context.PreventNavigation();
+    }
+}
