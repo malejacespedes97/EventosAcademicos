@@ -19,12 +19,12 @@ namespace EventosAcedemicos.Shared.Entities
 
         [Display(Name = "Hora inicio")]
         [MaxLength(10)]
-        [Required(ErrorMessage = "El campo hora de inicio es obligatorio")]
+        [Required(ErrorMessage = "La hora de inicio es obligatoria")]
         public string FechaInicio { get; set; } = null!;
 
         [Display(Name = "Hora Finalización")]
         [MaxLength(10)]
-        [Required(ErrorMessage = "El campo hora de finzalización es obligatorio")]
+        [Required(ErrorMessage = "La hora de finazalización es obligatoria")]
         public string FechaFinal { get; set; } = null!;
 
         [Display(Name = "Sesión")]
@@ -37,7 +37,7 @@ namespace EventosAcedemicos.Shared.Entities
         [Required(ErrorMessage = "El nombre del ponente es obligatorio")]
         public string Descripcion { get; set; } = null!;
 
-        [Display(Name = "Tema tratado")]
+        [Display(Name = "Tema Tratado")]
         [MaxLength(100)]
         [Required(ErrorMessage = "EL tema tratado en la sesión es obligatorio")]
         public string TemaEvento { get; set; } = null!;

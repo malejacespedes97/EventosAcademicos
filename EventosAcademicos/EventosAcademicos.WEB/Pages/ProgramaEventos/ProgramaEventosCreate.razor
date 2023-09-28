@@ -1,0 +1,33 @@
+﻿@page "/programaeventos/create"
+@using EventosAcademicos.Shared.Entities;
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Crear Evento Academico</h3>
+
+<ProgramaEventoForm @ref="programaEventosForm" ProgramaEvento="programaEvento" OnSubmit="Create" ReturnAction="Return" />
+
+@code {
+    private ProgramaEvento programaEvento = new();
+
+    private programaEventoForm? programaEventp;
+
+    private async Task Create()
+    {
+        var responseHttp = await repository.Post("/api/programaeventos", programaEvento);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message);
+            return;
+        }
+        programaEventosForm!.FormPostedSuccessfully = true;
+        navigationManager.NavigateTo("/programaeventos");
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/programaeventos");
+    }
+}
